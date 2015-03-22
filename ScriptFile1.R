@@ -225,27 +225,29 @@ levels(data$habitat)[match("w",levels(data$habitat))] <- "waste"
 levels(data$habitat)[match("d",levels(data$habitat))] <- "woods"
 ##data$habitat
 
-##data
+##summary(data)
 
-##data2 <- subset(data, EatIt == "poisonous")
-##data2[1:10,]
 
-##data2 <- subset(data, EatIt == "poisonous")
 
-##levels(data2) <- levels(data)
+rules <- apriori(data,parameter=list(minlen=2, supp=.4, 
+				conf=0.7, target="rules")
+		,appearance=list(rhs=c("EatIt=poisonous"),default="lhs"))
+		
+inspect(head(rules))
 
-##data[1:10,]
-##rules <- apriori(data,parameter = list(minlen=3, supp=.9, conf=0.8))
-##,control = list(verbose=F),
-##		parameter = list(minlen=2, supp=.5, conf=0.8), 
-##		appearance = list(rhs=c("EatIt=edible","EatIt=poisonous"),
-##				default="lhs"))
-rules <- apriori(data,parameter = list(minlen=2, supp=.7, 
-				conf=0.8, target="rules"))
-		##,appearance =list(rhs=c("EatIt=edible","EatIt=poisonous"),default="lhs"))
-inspect(rules)
-##quality(rules) <- round(quality(rules), digits=3)
+rulesedible <- apriori(data,parameter=list(minlen=2, supp=.4, 
+				conf=0.7, target="rules")
+		,appearance =list(rhs=c("EatIt=edible"),default="lhs"))
 
-##rules.sorted <- sort(rules, by="lift")
+inspect(head(rulesedible))
 
-##inspect(rules.sorted)
+
+rules.sorted <- sort(rules, by="lift")
+
+rulesedible.sorted <- sort(rulesedible, by="lift")
+
+
+inspect(rules.sorted)
+inspect(rulesedible.sorted)
+
+itemFrequencyPlot(rules)
