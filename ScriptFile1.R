@@ -253,28 +253,3 @@ plot(rules.sorted)
 
 plot(rules.sorted, measure=c("support", "lift"), shading="confidence", control=list(main="Poisonous Mushrooms"))
 plot(rulesedible.sorted, measure=c("support", "lift"), shading="confidence", control=list(main="Nonpoisonous Mushrooms"))
-
-=======
-rules <- apriori(data,parameter=list(minlen=2, supp=.4, 
-				conf=0.7, target="rules")
-		,appearance=list(rhs=c("EatIt=poisonous"),default="lhs"))
-		
-inspect(head(rules))
-
-rulesedible <- apriori(data,parameter=list(minlen=2, supp=.4, 
-				conf=0.7, target="rules")
-		,appearance =list(rhs=c("EatIt=edible"),default="lhs"))
-
-inspect(head(rulesedible))
-
-
-rules.sorted <- sort(rules, by="lift")
-
-rulesedible.sorted <- sort(rulesedible, by="lift")
-
-
-inspect(rules.sorted)
-inspect(rulesedible.sorted)
-
-itemFrequencyPlot(rules)
->>>>>>> refs/remotes/origin/master
